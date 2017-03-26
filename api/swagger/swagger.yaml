@@ -63,25 +63,6 @@ paths:
           description: User Registered
 
               $ref: '#/definitions/URL'
-    delete:
-      description: delete URL
-      parameters:
-        - name: url
-          in: body
-          description: URL
-          schema:
-            $ref: '#/definitions/URL'
-          required: true
-      tags:
-        - URL
-      responses:
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-        200:
-          description: deleted
-
   /swagger:
       x-swagger-pipe: swagger_raw
 
