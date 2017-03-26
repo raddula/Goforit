@@ -1,0 +1,11 @@
+- name :
+in :
+description :
+    required :
+        type :
+
+            200:
+description: Success
+schema:
+    $ref: #/definitions/FakeRequest
+

@@ -1,0 +1,398 @@
+swagger: "2.0"
+
+################################################################################
+#                              API Information                                 #
+################################################################################
+info:
+  version: "1.0.0"
+  title: Macys DataGenerator Rest API
+host: localhost:3000
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+################################################################################
+#                                 Paths                                        #
+################################################################################
+paths:
+  /data:
+    x-swagger-router-controller: data
+    get:
+      description: Returns the request and Expected Response.
+      parameters:
+        - name : path
+          in : query
+          description : Specified the url for which request and response to be generated
+          required : true
+          type : string
+        - name : method
+          in : query
+          description : Method of path
+          required : true
+          type : string
+      tags:
+        - Generator
+      responses:
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Server Error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/FakeRequest'
+        
+
+
+  /signIn:
+    x-swagger-router-controller: sign
+    post:
+      description: Validate the user credentials to access the UI console
+      parameters:
+        - name: user
+          in: body
+          description: User credentials
+          schema:
+            $ref: '#/definitions/User'
+          required: true
+      tags:
+        - Sign
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: User Credentials Matched
+  /signUp:
+    x-swagger-router-controller: sign
+    post:
+      description: Register new user to provide access to UI Console
+      parameters:
+        - name: user
+          in: body
+          description: User credentials
+          schema:
+            $ref: '#/definitions/User'
+          required: true
+      tags:
+        - Sign
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: User Registered
+
+  /url:
+    x-swagger-router-controller: url
+    get:
+      description: to get all the urls for which fakeRequest can be generated
+      tags:
+        - URL
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Retrived all the URLs
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/URL'
+    post:
+      description: to create a new URL for which fakeRequest can be generated
+      parameters:
+        - name: url
+          in: body
+          description: URL
+          schema:
+            $ref: '#/definitions/URL'
+          required: true
+      tags:
+        - URL
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Created New URL
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/URL'
+    put:
+      description: to update a new URL for which fakeRequest can be generated
+      parameters:
+        - name: url
+          in: body
+          description: URL
+          schema:
+            $ref: '#/definitions/URL'
+          required: true
+      tags:
+        - URL
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: updated URL
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/URL'
+    delete:
+      description: delete URL
+      parameters:
+        - name: url
+          in: body
+          description: URL
+          schema:
+            $ref: '#/definitions/URL'
+          required: true
+      tags:
+        - URL
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: deleted
+
+  /request:
+    x-swagger-router-controller: requestSchema
+    get:
+      description: Get all the request Schema
+      tags:
+        - Request Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Retrived all the URLs
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/REQUEST'
+    post:
+      description: to create a Request Schema for which fakeRequest can be generated
+      parameters:
+        - name: request
+          in: body
+          description: request
+          schema:
+            $ref: '#/definitions/REQUEST'
+          required: true
+      tags:
+        - Request Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Created New URL
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/REQUEST'
+    put:
+      description: to update a request Schema for which fakeRequest can be generated
+      parameters:
+        - name: request
+          in: body
+          description: REQUEST
+          schema:
+            $ref: '#/definitions/REQUEST'
+          required: true
+      tags:
+        - Request Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: updated URL
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/REQUEST'
+    delete:
+      description: delete URL
+      parameters:
+        - name: url
+          in: body
+          description: REQUEST
+          schema:
+            $ref: '#/definitions/URL'
+          required: true
+      tags:
+        - Request Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Deleted
+
+  /prerequisites:
+    x-swagger-router-controller: prerequisites
+    get:
+      description: Get all Prerequisites
+      tags:
+        - Prerequisites Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PREREQUISITES'
+    post:
+      description: Insert new Prerequisites
+      parameters:
+        - name: Prerequisites
+          in: body
+          description: Prerequisites
+          schema:
+            $ref: '#/definitions/PREREQUISITES'
+          required: true
+      tags:
+        - Prerequisites Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Created New URL
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PREREQUISITES'
+    put:
+      description: update Prerequisites
+      parameters:
+        - name: PREREQUISITES
+          in: body
+          description: PREREQUISITES
+          schema:
+            $ref: '#/definitions/PREREQUISITES'
+          required: true
+      tags:
+        - Prerequisites Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Prerequisites
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PREREQUISITES'
+    delete:
+      description: PREREQUISITES
+      parameters:
+        - name: PREREQUISITES
+          in: body
+          description: PREREQUISITES
+          schema:
+            $ref: '#/definitions/URL'
+          required: true
+      tags:
+        - Prerequisites Schema
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Deleted
+
+  /swagger:
+      x-swagger-pipe: swagger_raw
+
+################################################################################
+#                                   Models                                     #
+################################################################################
+definitions:
+  FakeRequest:
+    type: object
+    properties:
+      request:
+        type: object
+        description: request for application to be tested
+      response:
+        type: object
+        description: response expected for the request
+  Error:
+      type: object
+      properties:
+        message:
+          type: string
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  URL:
+    type: object
+    properties:
+      url:
+        type: string
+      method:
+        type: string
+  REQUEST:
+    type: object
+    properties:
+      url:
+        type: string
+      method:
+        type: string
+      content-type:
+        type: string
+      requestSchema:
+        type: object
+      replaceAttributes:
+        type: object
+
+  PREREQUISITES:
+    type: object
+    properties:
+      url:
+        type: string
+      method:
+        type: string
+      requestURL:
+        type: string
+      requestSchema:
+        type: object
+      replaceAttributes:
+        type: object
