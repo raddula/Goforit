@@ -1,7 +1,9 @@
+
 swagger: "2.0"
 
 ################################################################################
 #                              API Information                                 #
+#                        http://editor.swagger.io/#!/                          #
 ################################################################################
 info:
   version: "1.0.0"
@@ -20,7 +22,6 @@ produces:
 #                                 Paths                                        #
 ################################################################################
 paths:
-
   /signIn:
     x-swagger-router-controller: sign
     post:
@@ -61,8 +62,9 @@ paths:
             $ref: '#/definitions/Error'
         200:
           description: User Registered
+          schema:
+            $ref: '#/definitions/User'
 
-              $ref: '#/definitions/URL'
   /swagger:
       x-swagger-pipe: swagger_raw
 

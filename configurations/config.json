@@ -1,0 +1,7 @@
+{
+    "development": {
+        "database": "goforit",
+        "username": "root",
+        "password": "deepesh"
+    }
+}
