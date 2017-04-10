@@ -13,12 +13,9 @@ function signIn(database, email, password, next) {
             email_id: email,
             password: password
         }
-    }).then(function(err) {
-        console.log(err);
-        next(user);
     }).then(function(user) {
         console.log(user);
-        next(user);
+        next(undefined, user);
     });
 }
 
@@ -35,7 +32,7 @@ function signUp(database, email, password, next) {
             if (!created) {
                 return next(new Error('User with this email already exists'));
             }
-            next(user);
+            next(undefined, user);
         });
 };
 

@@ -17,7 +17,7 @@ function signIn(database, body, res) {
                 res.status(400).send(error)
             }
             logger.info(result);
-            res.send();
+            res.send(result);
         });
     });
 
