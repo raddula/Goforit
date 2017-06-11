@@ -1,0 +1,9 @@
+nguage: node_js
+node_js:
+  - "7"
+script: cd server
+before_install:
+  - npm install
+cache:
+  directories:
+    - "node_modules"
