@@ -4,5 +4,5 @@ This repo is about goForIt
 
 
 
-##TODO
+## TODO
 1. Convert all Callbacks to promises
