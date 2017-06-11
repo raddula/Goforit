@@ -29,5 +29,6 @@
   },
   "scripts": {
     "test": "mocha tests --reporter  mocha-spec-json-reporter --reporter-options mochaFile=./logs/test-result.json"
+    "start": "node app.js"
   }
 }
