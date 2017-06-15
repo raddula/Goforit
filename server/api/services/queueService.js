@@ -32,16 +32,24 @@ function publishMessage(body, res) {
 }
 
 function recieveMessage(body, res) {
-    var client = new kafka.Client('localhost:2181');
-    var consumer = new kafka.Consumer(client);
+	console.log("queue name: " + body.queueName);
+	var client = new kafka.Client('localhost:2181');
+	var consumer = new kafka.Consumer(client, [ {
+		topic : body.queueName
+	} ]);
+	consumer.payloads = [ {
+		topic : body.queueName,
+		partition : '0',
+		offset : 0,
+		maxBytes : 1048576,
+		metadata : 'm'
+	}, ];
 
-    consumer.addTopics([body.queueName], function (err, added) {
-        console.log(queueName + ' subscribed');
-    });
+	console.log(body.queueName + ' subscribed');
 
-    consumer.on('message', function (message) {
-        console.log(message);
-    });
+	consumer.on('message', function(message) {
+		console.log(message);
+	});
 }
 
 module.exports = {
