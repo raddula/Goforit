@@ -12,7 +12,8 @@ var app = express();
 module.exports = app;
 
 var config = {
-    appRoot: __dirname // required config
+    appRoot: __dirname, // required config
+    swaggerFile:`${__dirname}/api/swagger/swagger.yaml` // swagger config file location
 };
 
 var db;
