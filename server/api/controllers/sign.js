@@ -16,8 +16,8 @@ function signIn(database, body, res) {
                 var error = {'message': err.message};
                 res.status(400).send(error)
             }
-            logger.info(result);
-            res.send(result);
+            logger.info(result.dataValues);
+            res.send(result.dataValues);
         });
     });
 
@@ -35,7 +35,7 @@ function signUp(database, body, res) {
                 res.status(400).send(error)
             }
             logger.info(result);
-            res.send();
+            res.send(result.dataValues);
         });
     });
 }

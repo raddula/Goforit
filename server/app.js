@@ -5,7 +5,6 @@ var express = require("express"),
     logger = require('./api/lib/logger.js').get('app'),
     bodyParser = require("body-parser"),
     SwaggerUi = require('swagger-tools/middleware/swagger-ui'),
-    open = require("opn"),
     SwaggerExpress = require('swagger-express-mw');
 
 var app = express();
@@ -47,9 +46,14 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
             logger.info('listening on', port);
         });
 
-        open('http://localhost:3000/docs', function(err) {
-            if (err)
-                logger.error('The user closed the browser');
-        });
+
+        if (process.env.NODE_ENV === 'development') {
+           var open = require("opn");
+           open('http://localhost:3000/docs', function(err) {
+               if (err)
+                   logger.error('The user closed the browser');
+           });
+        }
+
     });
 });

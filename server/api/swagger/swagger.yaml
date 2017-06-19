@@ -42,6 +42,8 @@ paths:
             $ref: '#/definitions/Error'
         200:
           description: User Credentials Matched
+          schema:
+            $ref: '#/definitions/UserInfo'
   /signUp:
     x-swagger-router-controller: sign
     post:
@@ -65,6 +67,86 @@ paths:
           schema:
             $ref: '#/definitions/User'
 
+  /user/{userId}:
+    x-swagger-router-controller: user
+    get:
+      description: Returns Basic Information for user with given userId
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "user id"
+          required: true
+          type: "integer"
+          format: "float"
+      tags:
+        - User
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: User Credentials Matched
+          schema:
+            $ref: '#/definitions/UserInfo'
+
+  /user/{userId}/longitude/{longitude}/latitude/{latitude}:
+    x-swagger-router-controller: user
+    get:
+      description: Returns the user info plus the spaces around
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "user id"
+          required: true
+          type: "integer"
+          format: "float"
+        - name: "longitude"
+          in: "path"
+          description: "longitude location of user"
+          required: true
+          type: "integer"
+          format: "float"
+        - name: "latitude"
+          in: "path"
+          description: "latitude location of user"
+          required: true
+          type: "integer"
+          format: "float"
+      tags:
+        - User
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: User Credentials Matched
+          schema:
+            $ref: '#/definitions/UserNearestPlaces'
+
+  /place/{placeId}:
+    x-swagger-router-controller: placeInfo
+    get:
+      description: Returns the Place info
+      parameters:
+        - name: "placeId"
+          in: "path"
+          description: "place id"
+          required: true
+          type: "integer"
+          format: "float"
+      tags:
+        - Place
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Place info Retrived
+          schema:
+            $ref: '#/definitions/PlaceInfo'
   /swagger:
       x-swagger-pipe: swagger_raw
 
@@ -84,3 +166,75 @@ definitions:
         type: string
       password:
         type: string
+
+  UserInfo:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      user:
+        type: string
+      img:
+        type: string
+      trustFactor:
+        type: integer
+
+  UserNearestPlaces:
+    type: object
+    properties:
+      user:
+        type: string
+      img:
+        type: string
+      trustFactor:
+        type: integer
+      localhost:
+        type: object
+        properties:
+          latitude:
+            type: integer
+          longitude:
+            type: integer
+      spaces:
+        type: "array"
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            distance:
+              type: integer
+            address:
+              type: string
+            href:
+              type: string
+            trustFactor:
+              type: integer
+
+  PlaceInfo:
+    type: object
+    properties:
+      name:
+        type: string
+      address:
+        type: string
+      trustFactor:
+        type: integer
+      hosts:
+        type: integer
+      posts:
+        type: array
+        items:
+          type: object
+          properties:
+            message:
+              type: string
+            trusts:
+              type: object
+              properties:
+                guestUpvotes:
+                  type: integer
+                hostsUpvotes:
+                  type: integer

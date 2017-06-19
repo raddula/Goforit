@@ -22,18 +22,21 @@ function signIn(database, email, password, next) {
 function signUp(database, email, password, next) {
     logger.info('entered saveUser', email);
     models.user.findOrCreate({
-            where: {
-                email_id: email,
-                password: password
-            }
-        })
-        .spread(function(user, created) {
-            console.log(user + ' ' + created);
-            if (!created) {
-                return next(new Error('User with this email already exists'));
-            }
-            next(undefined, user);
-        });
+        where: {
+            email_id: email,
+            password: password
+        }, defaults: {
+            img: 'http://localhost/img/null',
+            trust_factor: 0
+        }
+    })
+    .spread(function(user, created) {
+        console.log(user + ' ' + created);
+        if (!created) {
+            return next(new Error('User with this email already exists'));
+        }
+        next(undefined, user);
+    });
 };
 
 function validateUser(user, password, res) {
