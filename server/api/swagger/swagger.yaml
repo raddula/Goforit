@@ -67,6 +67,19 @@ paths:
           schema:
             $ref: '#/definitions/User'
 
+  /place/create:
+    x-swagger-router-controller: place
+    post:
+      description: Register a new place and create corresponding Topic to publish/subscrible messages.
+      parameters:
+        - name: place
+          in: body
+          description: Place co-ordinates and topic
+          schema:
+            $ref: '#/definitions/Place'
+          required: true
+      tags:
+        - Place
   /user/{userId}:
     x-swagger-router-controller: user
     get:
@@ -86,6 +99,23 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         200:
+          description: Place Created
+          schema:
+            $ref: '#/definitions/Place'
+
+  /place/post:
+    x-swagger-router-controller: place
+    post:
+      description: Publish messages to topic
+      parameters:
+        - name: message
+          in: body
+          description: Publish message to topic
+          schema:
+            $ref: '#/definitions/Message'
+          required: true
+      tags:
+        - Message
           description: User Credentials Matched
           schema:
             $ref: '#/definitions/UserInfo'
@@ -121,6 +151,23 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
+
+  /place/receive:
+    x-swagger-router-controller: place
+    post:
+      description: Subscribe topic for messages
+      parameters:
+        - name: subscribe
+          in: body
+          description: Subscribe topic to messages
+          schema:
+            $ref: '#/definitions/Subscribe'
+          required: true
+      tags:
+        - Subscribe
           description: User Credentials Matched
           schema:
             $ref: '#/definitions/UserNearestPlaces'
@@ -144,6 +191,9 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         200:
+          description: Message Subscribed
+          schema:
+            $ref: '#/definitions/Subscribe'
           description: Place info Retrived
           schema:
             $ref: '#/definitions/PlaceInfo'
@@ -167,6 +217,32 @@ definitions:
       password:
         type: string
 
+  Place:
+    type: object
+    properties:
+      name:
+        type: string
+      longitude:
+        type: string
+      latitude:
+        type: string
+      createdBy:
+        type: string
+
+  Message:
+    type: object
+    properties:
+      queueName:
+        type: string
+      message:
+        type: string
+  
+  Subscribe:
+    type: object
+    properties:
+      queueName:
+        type: string
+           
   UserInfo:
     type: object
     properties:
