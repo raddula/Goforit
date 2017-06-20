@@ -80,6 +80,16 @@ paths:
           required: true
       tags:
         - Place
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
+
   /user/{userId}:
     x-swagger-router-controller: user
     get:
@@ -101,7 +111,7 @@ paths:
         200:
           description: Place Created
           schema:
-            $ref: '#/definitions/Place'
+            $ref: '#/definitions/UserInfo'
 
   /place/post:
     x-swagger-router-controller: place
@@ -115,10 +125,16 @@ paths:
             $ref: '#/definitions/Message'
           required: true
       tags:
-        - Message
-          description: User Credentials Matched
+        - Kafka
+      responses:
+        default:
+          description: Unexpected error
           schema:
-            $ref: '#/definitions/UserInfo'
+            $ref: '#/definitions/Error'
+        200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
 
   /user/{userId}/longitude/{longitude}/latitude/{latitude}:
     x-swagger-router-controller: user
@@ -151,9 +167,9 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         200:
-          description: Message Posted
+          description: Nearest Places
           schema:
-            $ref: '#/definitions/Message'
+            $ref: '#/definitions/UserNearestPlaces'
 
   /place/receive:
     x-swagger-router-controller: place
@@ -167,10 +183,16 @@ paths:
             $ref: '#/definitions/Subscribe'
           required: true
       tags:
-        - Subscribe
-          description: User Credentials Matched
+        - Kafka
+      responses:
+        default:
+          description: Unexpected error
           schema:
-            $ref: '#/definitions/UserNearestPlaces'
+            $ref: '#/definitions/Error'
+        200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
 
   /place/{placeId}:
     x-swagger-router-controller: placeInfo
@@ -192,9 +214,6 @@ paths:
             $ref: '#/definitions/Error'
         200:
           description: Message Subscribed
-          schema:
-            $ref: '#/definitions/Subscribe'
-          description: Place info Retrived
           schema:
             $ref: '#/definitions/PlaceInfo'
   /swagger:
@@ -236,13 +255,13 @@ definitions:
         type: string
       message:
         type: string
-  
+
   Subscribe:
     type: object
     properties:
       queueName:
         type: string
-           
+
   UserInfo:
     type: object
     properties:
