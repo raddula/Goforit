@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Publish Subscribe message</title>
+	<script src="./socket.io.js"></script>
+	<script>
+		function startSocket() {
+			var socket = io('http://localhost:8810');
+			  socket.on('news', function (data) {
+			    document.getElementById('pendingCount').innerHTML = data.trustFactor;
+			  });
+		}
+	</script>
+</head>
+<body onload="startSocket()">
+	<form method="get" action="/place/subscribe">
+		<input type="submit" name="subscribe" value="subscribe"/>
+	</form>
+	<br/>Trust Factor:	<div id="pendingCount"></div>
+</body>
+</html>

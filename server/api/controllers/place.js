@@ -22,12 +22,13 @@ function post(database, body, res) {
     // TODO: Get GeoLocation langitude and latitude (temp code)
     // TODO: Add radius to all the corners the GeoLocation (need to explore)
     // TODO: Invoke QueueService to create Topic
+	// TODO: Get TrustFactor for the place from DB and increment
     queueService.publishMessage(body, res);
 
     // TODO: Store Place in DB using DAO
 }
 
-function receive(database, body, res) {
+function receive(body, res) {
     // TODO: Get GeoLocation langitude and latitude (temp code)
     // TODO: Add radius to all the corners the GeoLocation (need to explore)
     // TODO: Invoke QueueService to create Topic
@@ -36,10 +37,20 @@ function receive(database, body, res) {
     // TODO: Store Place in DB using DAO
 }
 
+function quit(body, res) {
+    // TODO: Get GeoLocation langitude and latitude (temp code)
+    // TODO: Add radius to all the corners the GeoLocation (need to explore)
+    // TODO: Invoke QueueService to create Topic
+    queueService.unsubscribeQueue(body, res);
+
+    // TODO: Store Place in DB using DAO
+}
+
 module.exports = {
 	    create: create,
 	    post: post,
-	    receive: receive
+	    receive: receive,
+	    quit: quit
 };
 
 

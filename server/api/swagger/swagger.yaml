@@ -136,6 +136,62 @@ paths:
           schema:
             $ref: '#/definitions/Message'
 
+  /place/post/{postId}/comment:
+    x-swagger-router-controller: place
+    post:
+      description: Comment on a specific Post
+      parameters:
+        - name: "postId"
+          in: "path"
+          description: "Post ID under which user has commented"
+          required: true
+          type: "integer"
+        - name: message
+          in: body
+          description: Comment on a specific Post
+          schema:
+            $ref: '#/definitions/Message'
+          required: true
+      tags:
+        - Kafka
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
+
+  /place/post/{postId}/trust:
+    x-swagger-router-controller: place
+    post:
+      description: Add trust factor to a post
+      parameters:
+        - name: "postId"
+          in: "path"
+          description: "Post ID under which user has trusted"
+          required: true
+          type: "integer"
+        - name: message
+          in: body
+          description: Add trust factor to a post
+          schema:
+            $ref: '#/definitions/Message'
+          required: true
+      tags:
+        - Kafka
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
+
   /user/{userId}/longitude/{longitude}/latitude/{latitude}:
     x-swagger-router-controller: user
     get:
@@ -171,7 +227,7 @@ paths:
           schema:
             $ref: '#/definitions/UserNearestPlaces'
 
-  /place/receive:
+  /place/subscribe:
     x-swagger-router-controller: place
     post:
       description: Subscribe topic for messages
@@ -181,6 +237,29 @@ paths:
           description: Subscribe topic to messages
           schema:
             $ref: '#/definitions/Subscribe'
+          required: true
+      tags:
+        - Kafka
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        200:
+          description: Message Posted
+          schema:
+            $ref: '#/definitions/Message'
+
+  /place/unsubscribe:
+    x-swagger-router-controller: place
+    post:
+      description: Unsubscribe topic for messages
+      parameters:
+        - name: unsubscribe
+          in: body
+          description: Unsubscribe topic to messages
+          schema:
+            $ref: '#/definitions/Unsubscribe'
           required: true
       tags:
         - Kafka
@@ -247,16 +326,34 @@ definitions:
         type: string
       createdBy:
         type: string
+      queueName:
+        type: string
 
   Message:
     type: object
     properties:
       queueName:
         type: string
+      id:
+        type: string
+      parent:
+        type: string
+      type:
+        type: string
+      sender:
+        type: string
+      trustFactor:
+        type: string
       message:
         type: string
 
   Subscribe:
+    type: object
+    properties:
+      queueName:
+        type: string
+
+  Unsubscribe:
     type: object
     properties:
       queueName:

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Publish Subscribe message</title>
+	<script>
+		var counter = 0;
+	
+		function addPost(message) {
+			post ('/place/post', 'placePost', submit);
+			var content = buildContent('post', message, ++counter);
+			updateContent('postList', content, render);
+		}
+		
+		function addComment(message) {
+			post ('/place/post/1/comment', 'placePost', submit);
+			var content = buildContent('comment', message);
+			updateContent('commentList', content, render);
+		}
+		
+		var post = function(uri, actionId, callback){
+			callback(uri, actionId);
+		};
+		
+		var updateContent = function(containerName, content, callback) {
+			callback(containerName, content);
+		};
+
+		var submit = function(uri, actionId) {
+			document.getElementById(actionId).action = uri;
+			document.getElementById(actionId).submit();
+		};
+		
+		var render = function(containerName, content) {
+			var existingContent = document.getElementById(containerName).innerHTML;
+			document.getElementById(containerName).innerHTML = existingContent + content;
+		};
+		
+		function buildContent(contentType, message, postId) {
+			var content = '';
+			
+			if (contentType == 'post') {
+				content = "<li id='" + postId + "'><p>" + document.getElementById('message').value + "</p><br>" +
+				"<input type='text' name='commentMsg'/>" + 
+				"<input type='button' name='postComment' value='comment' onClick='addComment("+ "\"commentMsg\"" + ")'/>" + 
+				"<div id='commentContainer'><ul id='commentList'><ul></div>" + 
+				"<input type='button' name='trust' value='+1'/></li>";
+			} else if (contentType == 'comment') {
+				
+			} else if (contentType == '+1') {
+				
+			}
+			
+			return content;
+		}
+	</script>
+</head>
+<body>
+	<form method="post" id='placePost' action='#'>
+		<input type="text" name="message" id="message"/>
+		<input type="button" name="post" value="post" onClick="addPost('message')"/>
+	</form>
+	<div id="postContainer"><ul id="postList"></ul></div>
+</body>
+</html>

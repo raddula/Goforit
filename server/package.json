@@ -11,13 +11,14 @@
     "finalhandler": "^1.0.1",
     "js2xmlparser": "2.0.2",
     "jsonfile": "2.4.0",
+    "kafka-node": "1.6.2",
     "log4js": "1.1.0",
     "mysql": "^2.13.0",
     "path-to-regexp": "^1.7.0",
     "sequelize": "^3.30.4",
+    "socket.io": "^2.0.3",
     "swagger-express-mw": "0.7.0",
-    "swagger-tools": "0.10.1",
-    "kafka-node": "1.6.2"
+    "swagger-tools": "0.10.1"
   },
   "devDependencies": {
     "chai": "3.5.0",
