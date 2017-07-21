@@ -7,7 +7,7 @@ logger = require('./../lib/logger.js').get('routes');
 
 var appRouter = function (app, database) {
 
-	/*app.get('/publisher', function(req, res){
+	app.get('/publisher', function(req, res){
 		fs.readFile('/Users/yc05ea1/Work/POC/Goforit/ui/publisher.html',function (err, data){
 	        res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
 	        res.write(data);
@@ -29,7 +29,7 @@ var appRouter = function (app, database) {
 	        res.write(data);
 	        res.end();
 	    });
-	});*/
+	});
 	
     //sign
     app.post("/signIn", function (req, res) {

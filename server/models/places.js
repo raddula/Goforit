@@ -46,7 +46,7 @@ module.exports = function(sequelize, Sequelize) {
                 this.getDataValue('latitude');
             }
         },
-        topicName: {
+        topic_name: {
             type: Sequelize.STRING,
             allowNull: false,
             get: function() {

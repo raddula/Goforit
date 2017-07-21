@@ -72,7 +72,9 @@ function recieveMessage(body, res) {
 		var notification = {};
 		notification.id = data.id,
 		notification.parent = data.parent,
-		notification.type = data.postType, // P, C, T
+		notification.type = data.type, // P, C, T
+		// Temparory code to test
+		notification.timeStamp = new Date();
 		notification.count = count++, // Value should be calculated per subscriber, UI can also derive it
 		notification.sender = data.sender, // H, G
 		notification.trustFactor = data.trustFactor;
