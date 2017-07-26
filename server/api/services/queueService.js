@@ -1,6 +1,8 @@
-/**
- * Created on 6/1/17.
- */
+'use strict';
+
+var dao = require('./../dao/dao.js'),
+    logger = require('./../lib/logger.js');
+
 var kafka = require('kafka-node');
 var console = require('console');
 var app = require('express')();
@@ -43,6 +45,27 @@ function publishMessage(body) {
     });
 
     producer.on('error', function (err) {})
+    
+    saveMessage(message, function (err, res) {
+    	if (err) throw err;
+    	else {
+    		return res.body;
+    	}
+    }); 
+}
+
+function saveMessage(message) {
+	var postInfo = {};
+	postInfo.parent_id = 123,
+	postInfo.place_id = 765,
+	postInfo.type = 'P',
+	postInfo.comment_count = 234,
+	postInfo.trust_count = 1700,
+	postInfo.posted_by = 3456,
+	postInfo.posted_as = 'H',
+	postInfo.content_type = 'TEXT',
+	postInfo.content = 'Sample message';
+	dao.savePost(postInfo);
 }
 
 function recieveMessage(body, res) {

@@ -53,9 +53,28 @@ function validateUser(user, password, res) {
     });
 }
 
+function savePost(postInfo) {
+    logger.info('entered savePost', postInfo);
+    models.post.create({
+        	parent_id: postInfo.parent_id,
+        	place_id: postInfo.place_id,
+        	type: postInfo.type,
+        	comment_count: postInfo.comment_count,
+        	trust_count: postInfo.trust_count,
+        	posted_by: postInfo.posted_by,
+        	posted_as: postInfo.posted_as,
+        	content_type: postInfo.content_type,
+        	content: postInfo.content
+    })
+    .then(function(savedPost) {
+        console.log('Post with ID:' + savedPost.id + ' is created');
+        return savedPost;
+    });
+};
 
 
 module.exports = {
     signIn: signIn,
-    signUp: signUp
+    signUp: signUp,
+    savePost: savePost
 };
