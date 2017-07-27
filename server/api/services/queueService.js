@@ -69,13 +69,14 @@ function saveMessage(message) {
 }
 
 function recieveMessage(body, res) {
+	console.log(body);
 	var Consumer = kafka.Consumer
 	var Offset = kafka.Offset;
 	var client = new kafka.Client("localhost:2181/")
 	var options = { autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024 };
 	var offset = new Offset(client);
 
-	consumer = new Consumer(
+	var consumer = new Consumer(
 	        client, 
 	        [{ topic: body.queueName, partition: 0, options }]
 	);
