@@ -1,53 +1,112 @@
--- TODO create SQL Schema Script
--- DATABASE Selected
+-- TODO create SQL Schema Script 
+-- DATABASE Selected 
+USE goforit; 
 
+DROP TABLE trust; 
 
-use goforit;
+DROP TABLE comment; 
 
-DROP TABLE TRUST;
+DROP TABLE post; 
 
-DROP TABLE COMMENT;
+DROP TABLE place_membership; 
 
-DROP TABLE POST;
+DROP TABLE place; 
 
-DROP TABLE PLACE_MEMBERSHIP;
+DROP TABLE user_friend; 
 
-DROP TABLE PLACE;
+DROP TABLE user; 
 
-DROP TABLE USER_FRIEND;
+CREATE TABLE user 
+  ( 
+     user_id          BIGINT PRIMARY KEY, 
+     first_name       VARCHAR(45), 
+     last_name        VARCHAR(45), 
+     password         VARCHAR(45), 
+     email_address    VARCHAR(45), 
+     phone_number     BIGINT, 
+     created_on       TIMESTAMP, 
+     pending_posts    INT, 
+     pending_comments INT, 
+     trust_factor     BIGINT, 
+     UNIQUE KEY (email_address) 
+  ); 
 
-DROP TABLE USER;
+CREATE TABLE user_friend 
+  ( 
+     user_id     BIGINT, 
+     friend_id   BIGINT, 
+     friend_type VARCHAR(10), 
+     FOREIGN KEY(user_id) REFERENCES user(user_id), 
+     FOREIGN KEY(friend_id) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE USER (USER_ID BIGINT PRIMARY KEY, FIRST_NAME VARCHAR(45), 
-LAST_NAME VARCHAR(45), PASSWORD VARCHAR(45), EMAIL_ADDRESS VARCHAR(45), 
-PHONE_NUMBER BIGINT, CREATED_ON TIMESTAMP, PENDING_POSTS INT, 
-PENDING_COMMENTS INT, TRUST_FACTOR BIGINT, UNIQUE KEY (EMAIL_ADDRESS));
+CREATE TABLE place 
+  ( 
+     place_id      BIGINT PRIMARY KEY, 
+     place_name    VARCHAR(45), 
+     place_address VARCHAR(255), 
+     created_by    BIGINT, 
+     created_on    TIMESTAMP, 
+     topic_name    VARCHAR(20), 
+     FOREIGN KEY (created_by) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE USER_FRIEND (USER_ID BIGINT, FRIEND_ID BIGINT, FRIEND_TYPE VARCHAR(10), 
-FOREIGN KEY(USER_ID) REFERENCES USER(USER_ID), FOREIGN KEY(FRIEND_ID) REFERENCES USER(USER_ID));
+CREATE TABLE post 
+  ( 
+     post_id      BIGINT PRIMARY KEY, 
+     place_posted BIGINT, 
+     posted_by    BIGINT, 
+     posted_on    TIMESTAMP, 
+     post_content VARCHAR(255), 
+     content_type VARCHAR(10), 
+     FOREIGN KEY(place_posted) REFERENCES place(place_id), 
+     FOREIGN KEY(posted_by) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE PLACE (PLACE_ID BIGINT PRIMARY KEY, PLACE_NAME VARCHAR(45), PLACE_ADDRESS VARCHAR(255), 
-CREATED_BY BIGINT, CREATED_ON TIMESTAMP, TOPIC_NAME VARCHAR(20), 
-FOREIGN KEY (CREATED_BY) REFERENCES USER(USER_ID));
+CREATE TABLE comment 
+  ( 
+     comment_id      BIGINT PRIMARY KEY, 
+     parent_post_id  BIGINT, 
+     commented_by    BIGINT, 
+     commented_on    TIMESTAMP, 
+     comment_content VARCHAR(255), 
+     content_type    VARCHAR(10), 
+     FOREIGN KEY(parent_post_id) REFERENCES post(post_id), 
+     FOREIGN KEY(commented_by) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE POST (POST_ID BIGINT PRIMARY KEY, PLACE_POSTED BIGINT, POSTED_BY BIGINT, 
-POSTED_ON TIMESTAMP, POST_CONTENT VARCHAR(255), CONTENT_TYPE VARCHAR(10), 
-FOREIGN KEY(PLACE_POSTED) REFERENCES PLACE(PLACE_ID), FOREIGN KEY(POSTED_BY) REFERENCES USER(USER_ID));
+CREATE TABLE trust_post 
+  ( 
+     trust_id     BIGINT PRIMARY KEY, 
+     trusted_by   BIGINT, 
+     trusted_post BIGINT, 
+     trusted_user BIGINT, 
+     trusted_on   TIMESTAMP, 
+     FOREIGN KEY(trusted_by) REFERENCES user(user_id), 
+     FOREIGN KEY(trusted_post) REFERENCES post(post_id), 
+     FOREIGN KEY(trusted_user) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE COMMENT (COMMENT_ID BIGINT PRIMARY KEY, PARENT_POST_ID BIGINT, COMMENTED_BY BIGINT, 
-COMMENTED_ON TIMESTAMP, COMMENT_CONTENT VARCHAR(255), CONTENT_TYPE VARCHAR(10), 
-FOREIGN KEY(PARENT_POST_ID) REFERENCES POST(POST_ID), FOREIGN KEY(COMMENTED_BY) REFERENCES USER(USER_ID));
+CREATE TABLE trust_place 
+  ( 
+     trust_id      BIGINT PRIMARY KEY, 
+     trusted_by    BIGINT, 
+     trusted_place BIGINT, 
+     trusted_user  BIGINT, 
+     trusted_on    TIMESTAMP, 
+     FOREIGN KEY(trusted_by) REFERENCES user(user_id), 
+     FOREIGN KEY(trusted_place) REFERENCES place(place_id), 
+     FOREIGN KEY(trusted_user) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE TRUST_POST (TRUST_ID BIGINT PRIMARY KEY, TRUSTED_BY BIGINT, TRUSTED_POST BIGINT, 
-TRUSTED_USER BIGINT, TRUSTED_ON TIMESTAMP, FOREIGN KEY(TRUSTED_BY) REFERENCES USER(USER_ID), 
-FOREIGN KEY(TRUSTED_POST) REFERENCES POST(POST_ID), FOREIGN KEY(TRUSTED_USER) REFERENCES USER(USER_ID));
+CREATE TABLE place_membership 
+  ( 
+     membership_id   BIGINT PRIMARY KEY, 
+     place_id        BIGINT, 
+     member_id       BIGINT, 
+     membership_type VARCHAR(10), 
+     FOREIGN KEY(place_id) REFERENCES place(place_id), 
+     FOREIGN KEY(member_id) REFERENCES user(user_id) 
+  ); 
 
-CREATE TABLE TRUST_PLACE (TRUST_ID BIGINT PRIMARY KEY, TRUSTED_BY BIGINT, TRUSTED_PLACE BIGINT, 
-TRUSTED_USER BIGINT, TRUSTED_ON TIMESTAMP, FOREIGN KEY(TRUSTED_BY) REFERENCES USER(USER_ID), 
-FOREIGN KEY(TRUSTED_PLACE) REFERENCES PLACE(PLACE_ID), FOREIGN KEY(TRUSTED_USER) REFERENCES USER(USER_ID));
-
-CREATE TABLE PLACE_MEMBERSHIP (MEMBERSHIP_ID BIGINT PRIMARY KEY, PLACE_ID BIGINT, 
-MEMBER_ID BIGINT, MEMBERSHIP_TYPE VARCHAR(10), 
-FOREIGN KEY(PLACE_ID) REFERENCES PLACE(PLACE_ID), FOREIGN KEY(MEMBER_ID) REFERENCES USER(USER_ID));
-
-COMMIT;
+COMMIT; 
