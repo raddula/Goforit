@@ -2,7 +2,9 @@
 -- DATABASE Selected 
 USE goforit; 
 
-DROP TABLE trust; 
+DROP TABLE trust_place; 
+
+DROP TABLE trust_post; 
 
 DROP TABLE comment; 
 
