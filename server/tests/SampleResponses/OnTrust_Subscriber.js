@@ -1,6 +1,9 @@
 {
 	"notification": {
 		"type": "T",
-		"count": "10"
+		"post_id": "123",
+		"post_trust_count": "10",
+		"place_id": "234",
+		"place_trust_count": "140"
 	}
 }
