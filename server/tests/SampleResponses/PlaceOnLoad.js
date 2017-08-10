@@ -6,20 +6,20 @@
 	"user_name": "Sample",
 	"user_id": "111",
 	
-	["post": {
+	"post": [{
 		"post_id": "11",
 		"post_content": "This is sample post",
 		"content_type": "T",
 		"posted_by": "Ram",
 		"posted_on": "Dec 9, 2016 12:00 pm",
 		
-		["comment": {
+		"comment": [{
 			"comment_id": "111",
 			"comment_content": "How r u?",
 			"content_type": "T",
 			"commented_on": "Dec 9, 2016 1:21 pm"
 		},
-		"comment": {
+		{
 			"comment_id": "112",
 			"comment_content": "/content/comment/xyz.gif",
 			"content_type": "I",
@@ -29,20 +29,20 @@
 		"trust_factor": "123"
 	},
 	
-	"post": {
+	{
 		"post_id": "16",
 		"post_content": "This is sample post - 2",
 		"content_type": "T",
 		"posted_by": "Ram xyz",
 		"posted_on": "Dec 9, 2016 12:05 pm",
 		
-		["comment": {
+		"comment": [{
 			"comment_id": "123",
 			"comment_content": "How r u?",
 			"content_type": "T",
 			"commented_on": "Dec 9, 2016 1:21 pm"
 		},
-		"comment": {
+		{
 			"comment_id": "112",
 			"comment_content": "/content/comment/xyz.gif",
 			"content_type": "I",
